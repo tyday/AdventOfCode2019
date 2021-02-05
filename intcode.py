@@ -1,5 +1,4 @@
 
-stored_Data = None
 
 def opcInput(data,i, params):
     inp  = input("Input the data: ")
@@ -38,6 +37,71 @@ def opcMultiply(data, i, params):
     data[z] = x * y
     return i + 4
 
+def opc_jump_if_true(data, i, params):
+    # if the first parameter is non-zero, 
+    # it sets the instruction pointer to the value from the second parameter. 
+    # Otherwise, it does nothing.
+    x = data[i+1]
+    if params[0] == 0: 
+        x = data[x]
+    y = data[i+2]
+    if params[1] == 0: 
+        y = data[y]
+    if x != 0:
+        return y
+    return i + 3
+
+def opc_jump_if_false(data, i, params):
+    # if the first parameter is zero, 
+    # it sets the instruction pointer to the value from the second parameter. 
+    # Otherwise, it does nothing
+    x = data[i+1]
+    if params[0] == 0: 
+        x = data[x]
+    y = data[i+2]
+    if params[1] == 0: 
+        y = data[y]
+    if x == 0:
+        return y
+    return i + 3
+
+def opc_less_than(data, i, params):
+    # if the first parameter is less than the second parameter, 
+    # it stores 1 in the position given by the third parameter. 
+    # Otherwise, it stores 0.
+    x = data[i+1]
+    if params[0] == 0: 
+        x = data[x]
+    y = data[i+2]
+    if params[1] == 0: 
+        y = data[y]
+    z = data[i+3]
+
+    if x < y:
+        data[z] = 1
+    else:
+        data[z] = 0
+    return i + 4
+
+def opc_equals(data, i, params):
+    # if the first parameter is equal to the second parameter, 
+    # it stores 1 in the position given by the third parameter. 
+    # Otherwise, it stores 0.
+    x = data[i+1]
+    if params[0] == 0: 
+        x = data[x]
+    y = data[i+2]
+    if params[1] == 0: 
+        y = data[y]
+    z = data[i+3]
+
+    if x == y:
+        data[z] = 1
+    else:
+        data[z] = 0
+    return i + 4
+
+
 def opcStop(data, i, params):
     return 0
 
@@ -46,6 +110,10 @@ OPCODES = {
     2: opcMultiply,
     3: opcInput,
     4: opcOutput,
+    5: opc_jump_if_true,
+    6: opc_jump_if_false,
+    7: opc_less_than,
+    8: opc_equals,
     99: opcStop
 }
 def split_op_code(code):
