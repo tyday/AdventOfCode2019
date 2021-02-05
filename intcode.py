@@ -4,13 +4,13 @@ stored_Data = None
 def opcInput(data,i, params):
     inp  = input("Input the data: ")
     data[data[i+1]] = int(inp) # stored_Data
-    return 2
+    return i + 2
 
 def opcOutput(data,i,params):
     
     # stored_Data = data[data[i+1]]
     print("Output", data[data[i+1]])
-    return 2
+    return i + 2
 
 def opcAdd(data,i,params):
     # Adds
@@ -22,7 +22,7 @@ def opcAdd(data,i,params):
     if params[2] == 1:
         raise Exception("Add op codes shouldn't have a third parameter")
     data[z] = x + y
-    return 4 # number of positions to move forward along op code
+    return i + 4 # number of positions to move forward along op code
 
 def opcMultiply(data, i, params):
     # Multiplies
@@ -36,7 +36,7 @@ def opcMultiply(data, i, params):
     if params[2] == 1:
         raise Exception("Add op codes shouldn't have a third parameter")
     data[z] = x * y
-    return 4
+    return i + 4
 
 def opcStop(data, i, params):
     return 0
@@ -65,7 +65,7 @@ def evaluate_op_code(data):
         if result == 0:
             break
         else:
-            i += result
+            i = result
 
 if __name__ == '__main__':
     test_data = [1,1,1,4,99,5,6,0,99]
